@@ -10,6 +10,7 @@ def main():
 
     try:
         server.bind((HOST, PORT))
+        print(f"Running the server on {HOST} {PORT}")
     except:
         print(f"Unable to bind to host {HOST} and port {PORT}")
 
