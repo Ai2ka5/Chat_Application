@@ -7,7 +7,18 @@ LISTENER_LIMIT = 5
 active_clients = []
 
 
-def send_message_to_all(from_username, message):
+def listen_for_messages(client, username):
+    while 1:
+
+        message = client.recv(2048).decode('utf8')
+        if message != "":
+            final_msg = username + '~' + message
+            send_message_to_all(final_msg)
+        else:
+            print(f"The message send from client {username} is empty")
+
+
+def send_message_to_all(message):
     pass
 
 
