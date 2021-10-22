@@ -18,8 +18,13 @@ def listen_for_messages(client, username):
             print(f"The message send from client {username} is empty")
 
 
+def send_message_to_client(client, message):
+    client.sendall(message.encode())
+
+
 def send_message_to_all(message):
-    pass
+    for user in active_clients:
+        send_message_to_client(user[1], message)
 
 
 def client_handler(client):
@@ -27,9 +32,11 @@ def client_handler(client):
         username = client.recv(2048).decode('utf-8')
         if username != "":
             active_clients.append((username, client))
-
+            break
         else:
             print("Client username is empty")
+
+    threading.Thread(target=listen_for_messages, args=(client, username, )).start()
 
 
 def main():
