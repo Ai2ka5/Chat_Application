@@ -32,11 +32,13 @@ def client_handler(client):
         username = client.recv(2048).decode('utf-8')
         if username != "":
             active_clients.append((username, client))
+            prompt_message = "SERVER~" + f"{username} added to chat"
+            send_message_to_all(prompt_message)
             break
         else:
             print("Client username is empty")
 
-    threading.Thread(target=listen_for_messages, args=(client, username, )).start()
+    threading.Thread(target=listen_for_messages, args=(client, username,)).start()
 
 
 def main():
